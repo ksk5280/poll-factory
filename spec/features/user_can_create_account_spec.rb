@@ -12,6 +12,9 @@ RSpec.feature "User can create an account" do
     fill_in "Password confirmation", with: "password"
     click_on "Create Account"
 
+    user = User.last
+
     expect(current_path).to eq "/polls"
+    expect(page).to have_content "Your account has been successfully created #{user.email}!"
   end
 end

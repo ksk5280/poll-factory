@@ -1,14 +1,30 @@
-<h1>Register New User</h1>
+<div class="form-body form-horizontal">
+  <h3 class="col-sm-offset-4 form-text">Register New User</h3>
+  <%= form_for @user do |f| %>
+  <div class="form-group">
+    <%= f.label :email, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+  </div>
 
-<%= form_for @user do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+  <div class="form-group">
+    <%= f.label :password, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :password, class: "form-control" %>
+    </div>
+  </div>
 
-  <%= f.label :password %>
-  <%= f.text_field :password %>
-
-  <%= f.label :password_confirmation %>
-  <%= f.text_field :password_confirmation %>
-
-  <%= f.submit "Create Account" %>
-<% end %>
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :password_confirmation, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-6">
+      <%= f.submit "Create Account", class: "btn btn-default" %>
+    </div>
+  </div>
+  <% end %>
+</div>

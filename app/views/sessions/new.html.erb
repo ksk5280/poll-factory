@@ -1,1 +1,35 @@
-<%= link_to "Create Account", new_user_path %>
+<div class="form-body form-horizontal">
+  <h3 class="col-sm-offset-4 form-text">Sign into you account</h3>
+  <%= form_for(:session, url: login_path) do |f| %>
+  <div class="form-group">
+    <%= f.label :email, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :password, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: "control-label col-sm-4" %>
+    <div class="col-sm-6">
+      <%= f.text_field :password_confirmation, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-6 login">
+      <%= f.submit "Login", class: "btn btn-default" %>
+    </div>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-sm-offset-4">
+      <%= link_to "New Users: Create Account", new_user_path, class: "form-text" %>
+    </div>
+  </div>
+</div>
