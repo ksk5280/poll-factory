@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Registered user can log in" do
+RSpec.feature "Registered user can log in and log out" do
   scenario "they see dashboard of polls" do
     user = User.create(email: "example@gmail.com", password: "password", password_confirmation: "password")
 

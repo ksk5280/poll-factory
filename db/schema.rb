@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620171829) do
+ActiveRecord::Schema.define(version: 20160620230633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "poll_id"
+  end
+
+  add_index "answers", ["poll_id"], name: "index_answers_on_poll_id", using: :btree
+
+  create_table "polls", force: :cascade do |t|
+    t.text     "question"
+    t.datetime "exp_date"
+    t.boolean  "active",     default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "user_id"
+  end
+
+  add_index "polls", ["user_id"], name: "index_polls_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
@@ -23,4 +43,15 @@ ActiveRecord::Schema.define(version: 20160620171829) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "answer_id"
+  end
+
+  add_index "votes", ["answer_id"], name: "index_votes_on_answer_id", using: :btree
+
+  add_foreign_key "answers", "polls"
+  add_foreign_key "polls", "users"
+  add_foreign_key "votes", "answers"
 end
