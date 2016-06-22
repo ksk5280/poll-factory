@@ -4,9 +4,10 @@ class Main extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <NewPoll />
-      </div>)
+      </div>
+    )
   }
 }

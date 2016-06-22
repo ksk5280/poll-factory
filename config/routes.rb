@@ -7,4 +7,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :index, :create]
   resources :polls, only: [:index]
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :polls, only: [:index, :create, :show, :update]
+    end
+  end
 end
