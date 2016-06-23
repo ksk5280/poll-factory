@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :polls, only: [:index, :create, :show, :update]
+      resources :polls, only: [:index, :create, :show, :update] do
+        resources :answers, only: [:create, :show, :update]
+      end
     end
   end
 end
