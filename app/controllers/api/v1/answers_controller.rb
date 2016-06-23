@@ -12,6 +12,11 @@ class Api::V1::AnswersController < ApiController
     respond_with answer, json: answer
   end
 
+  def show
+    votes = Answer.find(params[:id].to_i).votes.count
+    respond_with votes
+  end
+
   private
     def answer_params
       params.permit(:description)

@@ -1,19 +1,36 @@
 class PollBarChart extends React.Component {
   constructor() {
     super();
-    this.handleVote = this.handleVote.bind(this);
+    this.state = { pollVotes: {}};
   }
 
   componentDidMount () {
-    console.log('pollBarChart', this.props)
+    $.ajax({
+      url: `/api/v1/polls/${this.props.pollId}`,
+      type: 'GET',
+      success: (response) => {
+        this.setState({pollVotes: response},
+          function () {
+            this.createChart()
+          });
+      }
+    })
+  }
+
+  createChart () {
+    let pollVotes = this.state.pollVotes;
+    let voteCount = Object.keys(pollVotes).map(function (key) {
+      return pollVotes[key];
+    });
+
     let ctx = document.getElementById("pollBarChart");
     let chartData = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: Object.keys(pollVotes),
         datasets: [{
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: voteCount,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -23,7 +40,7 @@ class PollBarChart extends React.Component {
             'rgba(255, 159, 64, 0.2)'
           ],
           borderColor: [
-            'rgba(255,99,132,1)',
+            'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)',
@@ -45,27 +62,9 @@ class PollBarChart extends React.Component {
     });
   }
 
-  handleVote (e) {
-
-  }
-
   render() {
-    let answers = this.props.answers.map(function (answer) {
-      return (
-        <div>
-          <input type="radio" name="answers" value={answer.description} /> {answer.description}
-        </div>
-      )
-    })
     return (
-      <div>
-        <form>
-          <h3>{this.props.poll.question}</h3>
-          {answers}
-          <button className="btn btn-default" onClick={this.handleVote}>Vote</button>
-        </form>
-        <canvas id="pollBarChart" width="300" height="150"></canvas>
-      </div>
+      <canvas id="pollBarChart" width="300" height="150"></canvas>
     )
   }
 }

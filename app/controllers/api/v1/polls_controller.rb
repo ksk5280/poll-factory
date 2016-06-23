@@ -14,6 +14,10 @@ class Api::V1::PollsController < ApiController
     respond_with poll, json: poll
   end
 
+  def show
+    respond_with Poll.find(params[:id].to_i).vote_count
+  end
+
   private
     def poll_params
       params.permit(:question)
