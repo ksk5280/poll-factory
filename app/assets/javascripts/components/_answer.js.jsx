@@ -6,10 +6,17 @@ class Answer extends React.Component {
       refId: `answer${this.props.order}`
     };
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   handleKeyUp (e) {
     if (e.keyCode === 13) {
+      this.answerSubmit();
+    }
+  }
+
+  handleKeyDown (e) {
+    if (e.keyCode === 9) {
       this.answerSubmit();
     }
   }
@@ -23,7 +30,6 @@ class Answer extends React.Component {
       data = {};
 
     answerInput.blur();
-
     data.description = description;
 
     if (answerId) {
@@ -38,13 +44,11 @@ class Answer extends React.Component {
       success: (response) => {
         this.state.answerId = response.id;
         this.props.answerUpdate(this.props.order, { id: response.id }, type);
-        console.log('answerSubmit', response, type)
       }
     });
   }
 
   componentDidMount () {
-    console.log('this.props', this.props);
     if (this.props.focus) {
       this.refs[this.state.refId].focus();
       this.props.answerUpdate(this.props.order, { focus: false });
@@ -52,12 +56,11 @@ class Answer extends React.Component {
   }
 
   render () {
-console.log('Answer this.state', this.state);
     return (
       <div>
         <input ref={this.state.refId} type="text" placeholder="Enter answer"
           className="form-control answer" autoComplete="off"
-          onKeyUp={this.handleKeyUp}/>
+          onKeyUp={this.handleKeyUp} onKeyDown={this.handleKeyDown}/>
       </div>
     );
   }

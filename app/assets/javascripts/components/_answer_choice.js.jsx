@@ -16,7 +16,8 @@ class AnswerChoice extends React.Component {
       type: 'POST',
       data: data,
       success: (response) => {
-        console.log('AnswerChoice', response)
+        localStorage.setItem(`poll${this.props.pollId}`, 'voted');
+        this.props.handleVote('voted');
       }
     })
   }

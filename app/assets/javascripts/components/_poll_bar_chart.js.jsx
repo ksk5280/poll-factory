@@ -14,7 +14,7 @@ class PollBarChart extends React.Component {
             this.createChart()
           });
       }
-    })
+    });
   }
 
   createChart () {
