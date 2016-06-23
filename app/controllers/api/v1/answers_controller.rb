@@ -6,7 +6,6 @@ class Api::V1::AnswersController < ApiController
   end
 
   def update
-    # binding.pry
     answerId = params[:answerId].to_i
     Answer.find(answerId).update(answer_params)
     answer = Answer.find(answerId)

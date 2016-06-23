@@ -8,7 +8,6 @@ class NewPoll extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleAnswerUpdate = this.handleAnswerUpdate.bind(this);
-    this.handleCreatePoll = this.handleCreatePoll.bind(this);
   }
 
   componentDidMount () {
@@ -82,15 +81,15 @@ console.log('AC', this, updateKey);
     });
   }
 
-  handleCreatePoll () {
-    console.log('create poll', this)
-  }
-
   render () {
     let
-      answerGroup, answerItems;
+      answerGroup, answerItems, pollLink, pollLinkGroup;
 
     if (this.state.pollId) {
+      pollLink = `/polls/${this.state.pollId}`;
+      pollLinkGroup = (
+        <a href={pollLink} className="btn btn-default">View Poll</a>
+      );
       answerItems = this.state.answers.map(function (answer) {
         return (
           <Answer key={answer.order} order={answer.order} focus={answer.focus}
@@ -102,14 +101,16 @@ console.log('AC', this, updateKey);
         <fieldset className="form-group">
           <label htmlFor="answer1">Answers: </label>
           {answerItems}
-        <input type="submit" value="Create Poll" className="btn btn-default" onClick={this.handleCreatePoll}/>
         </fieldset>
       );
     }
 
     return (
-      <div className="col-sm-5">
-        <legend>New Poll</legend>
+      <div className="col-sm-offset-3 col-sm-6">
+        <legend>
+        New Poll
+        <a href="/polls" className="btn btn-default" id="close-btn">x</a>
+        </legend>
         <fieldset className="form-group">
           <div>
             <label htmlFor="question">Question: </label>
@@ -119,6 +120,7 @@ console.log('AC', this, updateKey);
           </div>
         </fieldset>
         {answerGroup}
+        {pollLinkGroup}
       </div>
     );
   }
