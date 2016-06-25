@@ -19,11 +19,15 @@ class ShowPoll extends React.Component {
 
     let voteStatus = localStorage.getItem(`poll${this.props.poll.id}`);
 
+    let pollActive = this.props.poll.active;
+
     return (
       <div>
         <h3>{this.props.poll.question}</h3>
-        <TwitterLink question={this.props.poll.question} />
-        { voteStatus ? <PollBarChart pollId={this.props.poll.id}/> : answerObjects }
+        <a href="https://twitter.com/share" className="twitter-share-button"
+          data-size="large" data-text={`Go here to take this poll: ${this.props.poll.question}`}>
+        </a>
+        { (voteStatus || !pollActive) ? <PollBarChart pollId={this.props.poll.id}/> : answerObjects }
       </div>
     )
   }
