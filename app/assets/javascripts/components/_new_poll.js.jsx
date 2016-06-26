@@ -8,8 +8,8 @@ class NewPoll extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleAnswerUpdate = this.handleAnswerUpdate.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleDateBlur = this.handleDateBlur.bind(this);
+    this.handleDateClick = this.handleDateClick.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount () {
@@ -29,9 +29,11 @@ class NewPoll extends React.Component {
     }
   }
 
-  handleClick (e) {
-    order = this.state.answers.length;
-    // this.handleAnswerUpdate();
+  handleDateClick (e) {
+    $("#date-picker").datepicker()
+      .on("changeDate", function(e) {
+      this.handleDateChange();
+    }.bind(this));
   }
 
   handleAnswerUpdate (order, update, type) {
@@ -86,7 +88,7 @@ class NewPoll extends React.Component {
     });
   }
 
-  handleDateBlur (e) {
+  handleDateChange (e) {
     let
       pollId = this.state.pollId,
       expirationDate = new Date(this.refs.exp_date.value),
@@ -97,7 +99,7 @@ class NewPoll extends React.Component {
       type: 'PATCH',
       data: data,
       success: (response) => {
-        console.log('handleDateBlur success', response);
+        console.log('handleDateChange success', response);
       }
     })
   }
@@ -109,7 +111,7 @@ class NewPoll extends React.Component {
     if (this.state.pollId) {
       pollLink = `/polls/${this.state.pollId}`;
       pollLinkGroup = (
-        <a href={pollLink} className="btn btn-default" onClick={this.handleClick}>View Poll</a>
+        <a href={pollLink} className="btn btn-default">View Poll</a>
       );
       answerItems = this.state.answers.map(function (answer) {
         return (
@@ -125,16 +127,12 @@ class NewPoll extends React.Component {
             {answerItems}
           </fieldset>
           <fieldset>
-            <div className="control-group">
-              <label htmlFor="date-picker" className="control-label">Expiration Date: </label>
-              <div className="controls">
-                <div className="input-group">
-                  <input ref="exp_date" id="date-picker" type="text" className="date-picker form-control" onBlur={this.handleDateBlur}/>
-                  <label htmlFor="date-picker" className="input-group-addon btn">
-                    <span className="glyphicon glyphicon-calendar"></span>
-                  </label>
-                </div>
-              </div>
+            <label htmlFor="date-picker">Expiration Date: </label>
+            <div className="input-group">
+            <input ref="exp_date" id="date-picker" type="text" className="date-picker form-control"/>
+            <label htmlFor="date-picker" className="input-group-addon btn" onClick={this.handleDateClick}>
+              <span className="glyphicon glyphicon-calendar"></span>
+            </label>
             </div>
           </fieldset>
         </div>
