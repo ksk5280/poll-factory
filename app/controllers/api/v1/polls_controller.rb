@@ -20,6 +20,6 @@ class Api::V1::PollsController < ApiController
 
   private
     def poll_params
-      params.permit(:question)
+      params.permit(:question, :active)
     end
 end

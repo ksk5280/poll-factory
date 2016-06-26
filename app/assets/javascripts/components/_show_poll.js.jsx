@@ -1,7 +1,27 @@
 class ShowPoll extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleVote = this.handleVote.bind(this);
+  }
+
+  componentWillMount () {
+    this.checkExpirationDate ();
+  }
+
+  checkExpirationDate () {
+    let
+      pollId = this.props.poll.id,
+      expirationDate = new Date(this.props.poll.exp_date),
+      currentDate = new Date(),
+      data = { active: false, pollId: pollId };
+
+    if (this.props.poll.active && expirationDate < currentDate) {
+      $.ajax({
+        url: `/api/v1/polls/${pollId}`,
+        type: 'PATCH',
+        data: data
+      });
+    }
   }
 
   handleVote () {
@@ -17,9 +37,11 @@ class ShowPoll extends React.Component {
         )
       }.bind(this));
 
-    let voteStatus = localStorage.getItem(`poll${this.props.poll.id}`);
-
-    let pollActive = this.props.poll.active;
+    let
+      voteStatus = localStorage.getItem(`poll${this.props.poll.id}`),
+      expirationDate = new Date(this.props.poll.exp_date),
+      currentDate = new Date();
+      pollActive = (this.props.poll.pollActive && expirationDate < currentDate);
 
     return (
       <div>
