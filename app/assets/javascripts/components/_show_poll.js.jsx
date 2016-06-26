@@ -15,11 +15,14 @@ class ShowPoll extends React.Component {
       currentDate = new Date(),
       data = { active: false, pollId: pollId };
 
-    if (this.props.poll.active && expirationDate < currentDate) {
+    if (this.props.poll.active && expirationDate && expirationDate < currentDate) {
       $.ajax({
         url: `/api/v1/polls/${pollId}`,
         type: 'PATCH',
-        data: data
+        data: data,
+        success: (response) => {
+          console.log('checkExpirationDate success', response);
+        }
       });
     }
   }
@@ -41,7 +44,7 @@ class ShowPoll extends React.Component {
       voteStatus = localStorage.getItem(`poll${this.props.poll.id}`),
       expirationDate = new Date(this.props.poll.exp_date),
       currentDate = new Date();
-      pollActive = (this.props.poll.pollActive && expirationDate < currentDate);
+      pollActive = (this.props.poll.active && expirationDate > currentDate);
 
     return (
       <div>

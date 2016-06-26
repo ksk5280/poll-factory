@@ -8,6 +8,8 @@ class NewPoll extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleAnswerUpdate = this.handleAnswerUpdate.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleDateBlur = this.handleDateBlur.bind(this);
   }
 
   componentDidMount () {
@@ -27,17 +29,20 @@ class NewPoll extends React.Component {
     }
   }
 
+  handleClick (e) {
+    order = this.state.answers.length;
+    // this.handleAnswerUpdate();
+  }
+
   handleAnswerUpdate (order, update, type) {
-    console.log('handleAnswerUpdate', this.state);
     let
       // Find the answer choice based on order
       answerChoice = this.state.answers.find(function (item) {
         return item.order === this.order;
       }, { order });
-console.log('answerChoice', answerChoice, this.state, Object.keys(update));
+
     // Update answer choice info
     Object.keys(update).map(function (updateKey) {
-console.log('AC', this, updateKey);
       this.answerChoice[updateKey] = this.update[updateKey];
     }, { answerChoice, update });
 
@@ -64,7 +69,7 @@ console.log('AC', this, updateKey);
     }
     if (pollId) {
       type = 'PATCH';
-      data.pollId = pollId;
+      data.id = pollId;
     }
 
     $.ajax({
@@ -81,6 +86,22 @@ console.log('AC', this, updateKey);
     });
   }
 
+  handleDateBlur (e) {
+    let
+      pollId = this.state.pollId,
+      expirationDate = new Date(this.refs.exp_date.value),
+      data = { exp_date: expirationDate };
+
+    $.ajax({
+      url: `/api/v1/polls/${pollId}`,
+      type: 'PATCH',
+      data: data,
+      success: (response) => {
+        console.log('handleDateBlur success', response);
+      }
+    })
+  }
+
   render () {
     let
       answerGroup, answerItems, pollLink, pollLinkGroup;
@@ -88,7 +109,7 @@ console.log('AC', this, updateKey);
     if (this.state.pollId) {
       pollLink = `/polls/${this.state.pollId}`;
       pollLinkGroup = (
-        <a href={pollLink} className="btn btn-default">View Poll</a>
+        <a href={pollLink} className="btn btn-default" onClick={this.handleClick}>View Poll</a>
       );
       answerItems = this.state.answers.map(function (answer) {
         return (
@@ -98,10 +119,25 @@ console.log('AC', this, updateKey);
         );
       }.bind(this));
       answerGroup = (
-        <fieldset className="form-group">
-          <label htmlFor="answer1">Answers: </label>
-          {answerItems}
-        </fieldset>
+        <div>
+          <fieldset className="form-group">
+            <label htmlFor="answer1">Answers: </label>
+            {answerItems}
+          </fieldset>
+          <fieldset>
+            <div className="control-group">
+              <label htmlFor="date-picker" className="control-label">Expiration Date: </label>
+              <div className="controls">
+                <div className="input-group">
+                  <input ref="exp_date" id="date-picker" type="text" className="date-picker form-control" onBlur={this.handleDateBlur}/>
+                  <label htmlFor="date-picker" className="input-group-addon btn">
+                    <span className="glyphicon glyphicon-calendar"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
       );
     }
 

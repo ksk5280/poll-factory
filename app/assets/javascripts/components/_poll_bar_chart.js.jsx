@@ -9,7 +9,7 @@ class PollBarChart extends React.Component {
       url: `/api/v1/polls/${this.props.pollId}`,
       type: 'GET',
       success: (response) => {
-        this.setState({pollVotes: response},
+        this.setState({ pollVotes: response },
           function () {
             this.createChart()
           });

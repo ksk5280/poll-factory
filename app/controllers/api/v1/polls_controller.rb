@@ -8,7 +8,7 @@ class Api::V1::PollsController < ApiController
   end
 
   def update
-    pollId = params[:pollId].to_i
+    pollId = params[:id].to_i
     Poll.find(pollId).update(poll_params)
     poll = Poll.find(pollId)
     respond_with poll, json: poll
@@ -20,6 +20,6 @@ class Api::V1::PollsController < ApiController
 
   private
     def poll_params
-      params.permit(:question, :active)
+      params.permit(:question, :active, :exp_date)
     end
 end
