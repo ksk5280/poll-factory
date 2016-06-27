@@ -14,6 +14,8 @@ A user can do the following:
 * Chart.js is used to display the results of the vote after a user has voted
 * Polls can be created with an expiration date, after which voting is disabled
 
+![screenshot](Poll_Factory.jpg)
+
 ### Installation
 
 To install the application, clone via ```git``` and pull in gem dependencies with ```bundler```:
