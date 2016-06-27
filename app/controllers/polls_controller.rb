@@ -1,6 +1,10 @@
 class PollsController < ApplicationController
   def index
-    @polls = current_user.polls.all
+    if current_user
+      @polls = current_user.polls.all
+    else
+      redirect_to root_path
+    end
   end
 
   def new
