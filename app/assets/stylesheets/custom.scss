@@ -10,3 +10,56 @@ body {
 .alert {
   border-radius: 0;
 }
+
+#new-poll-btn {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.poll-list {
+  margin: 0 auto;
+  width: 75%;
+}
+
+.answer {
+  margin-bottom: 5px;
+}
+
+#close-btn {
+  font-weight: bold;
+  height: 25px;
+  line-height: 12px;
+  padding: 5px;
+  position: absolute;
+  right: 16px;
+  top: 2px;
+  width: 25px;
+}
+
+.date-picker-div {
+  margin-bottom: 5px;
+}
+
+.column {
+  display: inline-block;
+  max-width: 540px;
+  width: 100%;
+}
+
+.column.chart {
+  max-width: 100%;
+}
+
+.vote-items {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  white-space: normal;
+  text-align: left;
+}
+
+.show-container {
+  text-align: center;
+}

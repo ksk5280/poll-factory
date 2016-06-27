@@ -24,7 +24,7 @@ class AnswerChoice extends React.Component {
 
   render () {
     return (
-      <button ref={this.refId} onClick={this.handleClick}>{this.props.answerText}</button>
+      <button className="btn btn-default vote-items" ref={this.refId} onClick={this.handleClick}>{this.props.answerText}</button>
     )
   }
 }

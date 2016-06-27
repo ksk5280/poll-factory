@@ -29,23 +29,31 @@ class PollBarChart extends React.Component {
       data: {
         labels: Object.keys(pollVotes),
         datasets: [{
-          label: '# of Votes',
+          label: 'Number of Votes',
           data: voteCount,
           backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(153, 102, 255, 0.2)'
           ],
           borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 159, 64, 1)',
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
+            'rgba(153, 102, 255, 1)'
+          ],
+          hoverBackgroundColor: [
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(153, 102, 255, 0.5)'
           ],
           borderWidth: 1
         }]
@@ -63,8 +71,13 @@ class PollBarChart extends React.Component {
   }
 
   render() {
+    let pollInactive = (<h4 className="text-center">This Poll is No Longer Active</h4>)
+
     return (
-      <canvas id="pollBarChart" width="300" height="150"></canvas>
+      <div>
+        {!this.props.pollActive ? pollInactive : ""}
+        <canvas id="pollBarChart" width="250" height="100"></canvas>
+      </div>
     )
   }
 }

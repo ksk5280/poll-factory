@@ -11,7 +11,7 @@ RSpec.feature "Logged in user can create a poll" do
       # Have an option for entering a question
       # Have 4 options for answers
       # Have a button that can allow you to add additional answers
-      # 
+      #
 
   end
 end

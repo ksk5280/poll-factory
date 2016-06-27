@@ -10,7 +10,6 @@ def login(user)
   visit "/login"
   fill_in "Email", with: user.email
   fill_in "Password", with: "password"
-  fill_in "Password confirmation", with: "password"
   within ".login" do
     click_on "Login"
   end

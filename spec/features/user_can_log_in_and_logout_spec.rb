@@ -8,7 +8,6 @@ RSpec.feature "Registered user can log in and log out" do
 
     fill_in "Email", with: "example@gmail.com"
     fill_in "Password", with: "password"
-    fill_in "Password confirmation", with: "password"
     within ".login" do
       click_on "Login"
     end

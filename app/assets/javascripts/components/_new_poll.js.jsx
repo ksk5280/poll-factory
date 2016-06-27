@@ -128,7 +128,7 @@ class NewPoll extends React.Component {
           </fieldset>
           <fieldset>
             <label htmlFor="date-picker">Expiration Date: </label>
-            <div className="input-group">
+            <div className="input-group date-picker-div">
             <input ref="exp_date" id="date-picker" type="text" className="date-picker form-control"/>
             <label htmlFor="date-picker" className="input-group-addon btn" onClick={this.handleDateClick}>
               <span className="glyphicon glyphicon-calendar"></span>
