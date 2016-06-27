@@ -7,4 +7,5 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of :password_confirmation }
   it { should validate_uniqueness_of(:email).case_insensitive }
   it { should validate_confirmation_of :password }
+  it { should have_many(:polls).dependent(:destroy) }
 end
